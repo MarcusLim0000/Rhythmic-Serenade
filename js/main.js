@@ -31,3 +31,35 @@ document.addEventListener("DOMContentLoaded", function() {
     // Call the function to create the falling object
     createFallingObject();
 });
+
+
+// declare and cache keys into variables
+
+let keyW = document.getElementById('#w')
+let keyE = document.getElementById('#e')
+let keyR = document.getElementById('#r')
+let keyI = document.getElementById('#i')
+let keyO = document.getElementById('#o')
+let keyP = document.getElementById('#p')
+
+//event listener to declare keydown event for these elements
+
+document.body.addEventListener('keydown', function(event) {
+    //check if key pressed is the correct key
+    if(event.key === 'w') {
+        //code to change the column 'w' in order to indicate button pressed
+    }
+});
+
+//start button function
+
+let startButton = document.getElementById('startButton');
+
+  // Add a click event listener to the button
+  startButton.addEventListener('click', function() {
+    // Code to be executed when the button is clicked.
+    // You can replace the alert with your own logic to start something
+  });
+
+
+// how to check set time interval for javascript

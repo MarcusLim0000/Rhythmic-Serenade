@@ -7,6 +7,13 @@ body {
     padding: 0; /* Remove default padding */
     height: 100vh; /* Ensure body takes the full viewport height */
 }
+
+#startButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 .gameBoard {
     background-color: rgb(99, 96, 96);
     border: 3px solid black;
