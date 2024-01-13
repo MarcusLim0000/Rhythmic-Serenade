@@ -1,0 +1,59 @@
+body {
+    background-image: url('https://trumpwallpapers.com/wp-content/uploads/Anime-Wallpaper-01-1920x1080-1.jpg');
+    background-size: 100% 100%; /* Stretch the image to cover the entire background */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    height: 100vh; /* Ensure body takes the full viewport height */
+}
+.gameBoard {
+    background-color: rgb(99, 96, 96);
+    border: 3px solid black;
+    border-radius:10px;
+    grid-template-rows: 1fr auto;
+    height:70vh;
+    width:50vh;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr)
+}
+
+.column {
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    text-align: center;
+    position: relative;
+    font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+.footer {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    height: 100px;
+    background-color: rgb(146, 18, 18);
+    grid-column: span 6;
+}
+
+.keys {
+    text-align: center;
+    font-family: cursive;
+    font-size: x-large;
+    font-weight: bolder;
+    line-height: 50px;
+    color: black;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+}
+
+.note img {
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+}
+
+.falling-object img {
+    max-width: 100%; /* Set maximum width to 100% of the parent container */
+    max-height: 100%; /* Set maximum height to 100% of the parent container */
+}  
