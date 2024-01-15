@@ -1,5 +1,36 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+    width: 80%;
+}
+
+h1 {
+    font-family: cursive;
+    color: pink;
+    font-weight: bolder;
+    font-size: 40px;
+}
+
+.menu {
+    font-family: cursive;
+    color: pink;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.menu_song {
+    font-family: cursive;
+    color: pink;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
 body {
-    background-image: url('https://trumpwallpapers.com/wp-content/uploads/Anime-Wallpaper-01-1920x1080-1.jpg');
+    background-image: url("./wallpaper.jpg");
     background-size: 100% 100%; /* Stretch the image to cover the entire background */
     background-position: center; /* Center the background image */
     background-repeat: no-repeat;
@@ -15,7 +46,7 @@ body {
 }
 
 .gameBoard {
-    background-color: rgb(99, 96, 96);
+    background-color: rgb(25, 230, 230);
     border: 3px solid black;
     border-radius:10px;
     grid-template-rows: 1fr auto;
@@ -64,3 +95,10 @@ body {
     max-width: 100%; /* Set maximum width to 100% of the parent container */
     max-height: 100%; /* Set maximum height to 100% of the parent container */
 }  
+
+.result {
+    font-family: cursive;
+    color: pink;
+    font-weight: bolder;
+    font-size: 20px;
+}

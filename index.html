@@ -5,42 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>My own OSU</title>
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./style.css" />
     <script defer src="js/main.js"></script>
   </head>
   <body>
     <!--   <audio class="song" src = >The peggies centimeter!!!</audio> put song link to github source file here here -->
-    <h1>Rhythmic Serenade</h1>
-    
-    <button id="startButton">Start</button>
 
     <main>
+      <h1>Rhythmic Serenade</h1>
       <div class="menu">
         <p>Made by <span class="author">Marcus Lim</span> with lots of love.</p>
         <!--Put <a> tag here to href your github portfolio-->
       </div>
-
+      <button id="startButton">Start</button>
       <div class="menu_song">
-        <h2>Centimeter by The Peggies</h2>
+        <h2>Song: Centimeter by The Peggies</h2>
         <div>
           <p>
             <a
               class="author"
               target="__blank"
               href="https://www.youtube.com/watch?v=DzQ7s2KkbCk"
-              >Uploaded by DMM Pictures</a
+              >Song was uploaded by DMM Pictures</a
             >
           </p>
         </div>
       </div>
 
       <div class="gameBoard">
-        <div class="column" id="w"></div>
-        <div class="column" id="e"></div>
-        <div class="column" id="r"></div>
-        <div class="column" id="i"></div>
-        <div class="column" id="o"></div>
-        <div class="column" id="p"></div>
+        <div class="column" id="colW"></div>
+        <div class="column" id="colE"></div>
+        <div class="column" id="colR"></div>
+        <div class="column" id="colI"></div>
+        <div class="column" id="colO"></div>
+        <div class="column" id="colP"></div>
         <div class="footer">
           <div class="keys" id="keyW">w</div>
           <div class="keys" id="keyE">e</div>
@@ -54,14 +52,10 @@
       <div class="result">
         <h2 class="result_heading">The End!</h2>
         <div class="result_hit">
-          <p class="hit_heading">Hits</p>
-          <span>=======></span>
-          <p class="hit_count"></p>
+          <p class="hit_heading">Hits ==========> <span id="hit_count">0</span></p>
         </div>
         <div class="result_miss">
-          <p class="result_heading">Misses</p>
-          <span>=======></span>
-          <p class="miss_count"></p>
+          <p class="miss_heading">Miss ==========> <span id="miss_count">0</span></p>
         </div>
       </div>
     </main>
