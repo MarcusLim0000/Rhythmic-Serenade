@@ -1,13 +1,13 @@
-const fallingSpeed = 32; // Adjust as needed
-const fallingInterval = 50; // Adjust as needed
+const fallingSpeed = 30; // Adjust as needed
+const updateInterval = 30; // Adjust as needed
 
-//declare arrays of 1s and 0s, 1 indicating to release a note, 0 to abstain.
-const noteW = [1]
-const noteE = [1]
-const noteR = [1]
-const noteI = [1]
-const noteO = [1]
-const noteP = [1]
+//declare arrays of 1s and 0s, 1 indicating to release a note, 0 to abstain. total beats will be 210
+const noteW = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
+const noteE = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
+const noteR = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
+const noteI = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
+const noteO = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
+const noteP = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
 
 // bpm in milliseconds: 428.571
 const interval = 428.571;
@@ -31,47 +31,40 @@ let fallingObject;
 let score = 0;
 let miss = 0;
 let audio = document.getElementById('myAudio');
-let noteSpeed;
 let intervalId;
 
 let elapsedTime = 0;
 
 //function to start game and create notes
 
-function startGame() {
-  let intervalId;
-  let i = 0;
-
-  // Function to iterate through the array to determine if a note has to be dropped.
-    if (i < noteW.length) {
-      if (noteW[i] === 1) {
-        createFallingNoteW();
-      }
-      if (noteE[i] === 1) {
-        createFallingNoteE();
-      }
-      if (noteR[i] === 1) {
-        createFallingNoteR();
-      }
-      if (noteI[i] === 1) {
-        createFallingNoteI();
-      }
-      if (noteO[i] === 1) {
-        createFallingNoteO();
-      }
-      if (noteP[i] === 1) {
-        createFallingNoteP();
-      }
-
-      i++;
-    } else {
-      clearInterval(intervalId); // Clear the interval when the last index is reached
-    }
+function startGame(index) {
+  if (noteW[index] === 1) {
+    createFallingNoteW();
   }
+  if (noteE[index] === 1) {
+    createFallingNoteE();
+  }
+  if (noteR[index] === 1) {
+    createFallingNoteR();
+  }
+  if (noteI[index] === 1) {
+    createFallingNoteI();
+  }
+  if (noteO[index] === 1) {
+    createFallingNoteO();
+  }
+  if (noteP[index] === 1) {
+    createFallingNoteP();
+  }
+  // Check if there are more items to process
+  if (index < noteW.length - 1) {
+      // Set a timeout to process the next item after the delay
+      setTimeout(function () {
+        startGame(index + 1);
+      }, interval);
+  }
+}
 
-
-
-// Call the notes function to start the process
 
 // Function to update elapsed time
 function updateElapsedTime() {
@@ -85,6 +78,7 @@ function updateElapsedTime() {
 //functions to drop notes on individual columns
 
 function createFallingNoteW() {
+    let noteSpeed;
   fallingObject = document.createElement("div");
   fallingObject.classList.add("falling-object");
 
@@ -101,14 +95,15 @@ function createFallingNoteW() {
       fallingObject.style.transform = `translateY(${position}px)`;
 
       if (position > columns.colW.clientHeight) {
-          position = 0;
+          clearInterval(noteSpeed);
+          fallingObject.remove();
       }
   }
-
-  noteSpeed = setInterval(updatePosition, fallingInterval);
+   noteSpeed = setInterval(updatePosition, updateInterval);
 }
 
 function createFallingNoteE() {
+    let noteSpeed;
   fallingObject = document.createElement("div");
   fallingObject.classList.add("falling-object");
 
@@ -125,14 +120,16 @@ function createFallingNoteE() {
       fallingObject.style.transform = `translateY(${position}px)`;
 
       if (position > columns.colE.clientHeight) {
-          position = 0;
+        clearInterval(noteSpeed);
+        fallingObject.remove();
       }
   }
 
-  noteSpeed = setInterval(updatePosition, fallingInterval);
+  noteSpeed = setInterval(updatePosition, updateInterval);
 }
 
 function createFallingNoteR() {
+    let noteSpeed;
   fallingObject = document.createElement("div");
   fallingObject.classList.add("falling-object");
 
@@ -146,17 +143,19 @@ function createFallingNoteR() {
 
   function updatePosition() {
       position += fallingSpeed;
+      console.log(`Rposition${position}`)
       fallingObject.style.transform = `translateY(${position}px)`;
 
       if (position > columns.colR.clientHeight) {
-          position = 0;
+        clearInterval(noteSpeed);
+        fallingObject.remove();
       }
   }
-
-  noteSpeed = setInterval(updatePosition, fallingInterval);
+  noteSpeed = setInterval(updatePosition, updateInterval);
 }
 
 function createFallingNoteI() {
+    let noteSpeed;
   fallingObject = document.createElement("div");
   fallingObject.classList.add("falling-object");
 
@@ -173,14 +172,16 @@ function createFallingNoteI() {
       fallingObject.style.transform = `translateY(${position}px)`;
 
       if (position > columns.colI.clientHeight) {
-          position = 0;
+        clearInterval(noteSpeed);
+        fallingObject.remove();
       }
   }
 
-  noteSpeed = setInterval(updatePosition, fallingInterval);
+  noteSpeed = setInterval(updatePosition, updateInterval);
 }
 
 function createFallingNoteO() {
+    let noteSpeed;
   fallingObject = document.createElement("div");
   fallingObject.classList.add("falling-object");
 
@@ -197,14 +198,16 @@ function createFallingNoteO() {
       fallingObject.style.transform = `translateY(${position}px)`;
 
       if (position > columns.colO.clientHeight) {
-          position = 0;
+        clearInterval(noteSpeed);
+        fallingObject.remove();
       }
   }
 
-  noteSpeed = setInterval(updatePosition, fallingInterval);
+  noteSpeed = setInterval(updatePosition, updateInterval);
 }
 
 function createFallingNoteP() {
+    let noteSpeed;
   fallingObject = document.createElement("div");
   fallingObject.classList.add("falling-object");
 
@@ -221,11 +224,12 @@ function createFallingNoteP() {
       fallingObject.style.transform = `translateY(${position}px)`;
 
       if (position > columns.colP.clientHeight) {
-          position = 0;
+        clearInterval(noteSpeed);
+        fallingObject.remove();
       }
   }
 
-  noteSpeed = setInterval(updatePosition, fallingInterval);
+  noteSpeed = setInterval(updatePosition, updateInterval);
 }
 
 ////////////////////////////////
@@ -234,10 +238,6 @@ function createFallingNoteP() {
 function clearFallingNote() {
   if (fallingObject) {
       fallingObject.remove();
-      clearInterval(noteSpeed);
-      const audio = document.getElementById('myAudio');
-      audio.pause();
-      audio.currentTime = 0;
   }
 }
 
@@ -273,10 +273,10 @@ let startTime;
     // Code to be executed when the button is clicked.
         clearFallingNote();
         updateElapsedTime();
-        startGame();
+        startGame(0);
 
             // Reset startTime to null when the button is clicked again
-        startTime = null;
+        startTime = 0;
 
         // Set the start time only if it's the first time or after clearing         
         if (!startTime) {
@@ -284,5 +284,9 @@ let startTime;
             // Start updating elapsed time
             setInterval(updateElapsedTime, 1000);
         }
+        audio.pause();
+        audio.currentTime = 0;
         audio.play();
   });
+
+  
