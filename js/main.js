@@ -1,16 +1,16 @@
-const fallingSpeed = 30; // Adjust as needed
-const updateInterval = 30; // Adjust as needed
+const fallingSpeed = 5; // Adjust as needed
+const updateInterval = 5; // Adjust as needed
 
 //declare arrays of 1s and 0s, 1 indicating to release a note, 0 to abstain. total beats will be 210
-const noteW = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
-const noteE = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
-const noteR = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
-const noteI = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
-const noteO = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
-const noteP = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1]
+const noteW = [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+const noteE = [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+const noteR = [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+const noteI = [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+const noteO = [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+const noteP = [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
 
 // bpm in milliseconds: 428.571
-const interval = 428.571;
+const interval = 1000;
 
 //declaring state of columns
 
@@ -23,48 +23,44 @@ const columns = {
   'colP': document.getElementById("colP"),
 };
 
-const originalColor = columns.colW.style.backgroundColor;
-
-//other declarations
-
-let fallingObject;
-let score = 0;
-let miss = 0;
+// //other declarations
 let audio = document.getElementById('myAudio');
-let intervalId;
 
 let elapsedTime = 0;
+
+let hitCount = 0;
+let missCount = 0;
 
 //function to start game and create notes
 
 function startGame(index) {
   if (noteW[index] === 1) {
-    createFallingNoteW();
+    createFallingNote('colW');
   }
   if (noteE[index] === 1) {
-    createFallingNoteE();
+    createFallingNote('colE');
   }
   if (noteR[index] === 1) {
-    createFallingNoteR();
+    createFallingNote('colR');
   }
   if (noteI[index] === 1) {
-    createFallingNoteI();
+    createFallingNote('colI');
   }
   if (noteO[index] === 1) {
-    createFallingNoteO();
+    createFallingNote('colO');
   }
   if (noteP[index] === 1) {
-    createFallingNoteP();
+    createFallingNote('colP');
   }
+
   // Check if there are more items to process
   if (index < noteW.length - 1) {
-      // Set a timeout to process the next item after the delay
-      setTimeout(function () {
-        startGame(index + 1);
-      }, interval);
+    // Set a timeout to process the next item after the delay
+    setTimeout(function () {
+      startGame(index + 1);
+    }, interval);
   }
 }
-
 
 // Function to update elapsed time
 function updateElapsedTime() {
@@ -73,13 +69,11 @@ function updateElapsedTime() {
   document.querySelector('.elapsed_Time').innerText = `Elapsed Time: ${elapsedTime} seconds`;
 }
 
-
-////////////////////////////////////////////
 //functions to drop notes on individual columns
 
-function createFallingNoteW() {
-    let noteSpeed;
-  fallingObject = document.createElement("div");
+function createFallingNote(columnId) {
+  let noteSpeed;
+  let fallingObject = document.createElement("div");
   fallingObject.classList.add("falling-object");
 
   const image = document.createElement("img");
@@ -88,175 +82,60 @@ function createFallingNoteW() {
 
   let position = 0;
 
-  columns.colW.appendChild(fallingObject);
+  const column = columns[columnId];
+  column.appendChild(fallingObject);
 
   function updatePosition() {
-      position += fallingSpeed;
-      fallingObject.style.transform = `translateY(${position}px)`;
+    position += fallingSpeed;
+    fallingObject.style.transform = `translateY(${position}px)`;
 
-      if (position > columns.colW.clientHeight) {
-          clearInterval(noteSpeed);
-          fallingObject.remove();
-      }
-  }
-   noteSpeed = setInterval(updatePosition, updateInterval);
-}
-
-function createFallingNoteE() {
-    let noteSpeed;
-  fallingObject = document.createElement("div");
-  fallingObject.classList.add("falling-object");
-
-  const image = document.createElement("img");
-  image.src = "./assets/note.jpg";
-  fallingObject.appendChild(image);
-
-  let position = 0;
-
-  columns.colE.appendChild(fallingObject);
-
-  function updatePosition() {
-      position += fallingSpeed;
-      fallingObject.style.transform = `translateY(${position}px)`;
-
-      if (position > columns.colE.clientHeight) {
-        clearInterval(noteSpeed);
-        fallingObject.remove();
-      }
-  }
-
-  noteSpeed = setInterval(updatePosition, updateInterval);
-}
-
-function createFallingNoteR() {
-    let noteSpeed;
-  fallingObject = document.createElement("div");
-  fallingObject.classList.add("falling-object");
-
-  const image = document.createElement("img");
-  image.src = "./assets/note.jpg";
-  fallingObject.appendChild(image);
-
-  let position = 0;
-
-  columns.colR.appendChild(fallingObject);
-
-  function updatePosition() {
-      position += fallingSpeed;
-      console.log(`Rposition${position}`)
-      fallingObject.style.transform = `translateY(${position}px)`;
-
-      if (position > columns.colR.clientHeight) {
-        clearInterval(noteSpeed);
-        fallingObject.remove();
-      }
-  }
-  noteSpeed = setInterval(updatePosition, updateInterval);
-}
-
-function createFallingNoteI() {
-    let noteSpeed;
-  fallingObject = document.createElement("div");
-  fallingObject.classList.add("falling-object");
-
-  const image = document.createElement("img");
-  image.src = "./assets/note.jpg";
-  fallingObject.appendChild(image);
-
-  let position = 0;
-
-  columns.colI.appendChild(fallingObject);
-
-  function updatePosition() {
-      position += fallingSpeed;
-      fallingObject.style.transform = `translateY(${position}px)`;
-
-      if (position > columns.colI.clientHeight) {
-        clearInterval(noteSpeed);
-        fallingObject.remove();
-      }
-  }
-
-  noteSpeed = setInterval(updatePosition, updateInterval);
-}
-
-function createFallingNoteO() {
-    let noteSpeed;
-  fallingObject = document.createElement("div");
-  fallingObject.classList.add("falling-object");
-
-  const image = document.createElement("img");
-  image.src = "./assets/note.jpg";
-  fallingObject.appendChild(image);
-
-  let position = 0;
-
-  columns.colO.appendChild(fallingObject);
-
-  function updatePosition() {
-      position += fallingSpeed;
-      fallingObject.style.transform = `translateY(${position}px)`;
-
-      if (position > columns.colO.clientHeight) {
-        clearInterval(noteSpeed);
-        fallingObject.remove();
-      }
-  }
-
-  noteSpeed = setInterval(updatePosition, updateInterval);
-}
-
-function createFallingNoteP() {
-    let noteSpeed;
-  fallingObject = document.createElement("div");
-  fallingObject.classList.add("falling-object");
-
-  const image = document.createElement("img");
-  image.src = "./assets/note.jpg";
-  fallingObject.appendChild(image);
-
-  let position = 0;
-
-  columns.colP.appendChild(fallingObject);
-
-  function updatePosition() {
-      position += fallingSpeed;
-      fallingObject.style.transform = `translateY(${position}px)`;
-
-      if (position > columns.colP.clientHeight) {
-        clearInterval(noteSpeed);
-        fallingObject.remove();
-      }
-  }
-
-  noteSpeed = setInterval(updatePosition, updateInterval);
-}
-
-////////////////////////////////
-
-// Function to clear the falling object
-function clearFallingNote() {
-  if (fallingObject) {
+    if (position > column.clientHeight) {
+      clearInterval(noteSpeed);
       fallingObject.remove();
+    }
   }
+
+  noteSpeed = setInterval(updatePosition, updateInterval);
 }
 
-//event listener to change column color event when key is pressed for these elements
+// Function to detect hit
+function hitJudge(keyPressed) {
+  // Check if a note element is present
+  let note = document.querySelector('.falling-object');
 
+  // Get the computed style of the falling object
+  let transform = window.getComputedStyle(note).transform;
+  // Parse the transform matrix to get the translateY value
+  let translateY = parseInt(transform.split(',')[5])
+
+  // Check if the falling object's position is at the desired translateY value, note is true, and keyPressed is true
+  if (translateY >= 550 && translateY <= 650 && keyPressed === true) {
+    hitCount ++;
+    document.querySelector('#hit_count').innerText = `${hitCount}`;
+  } else {
+    missCount ++;
+    document.querySelector('#miss_count').innerText = `${missCount}`;
+  }
+}
+//event listener to change column color event when key is pressed for these elements
 function columnColorChange(columnId) {
   const column = columns[columnId];
   const originalColor = column.style.backgroundColor;
+  let keyPressed = false;
 
   document.body.addEventListener('keydown', function (event) {
-      if (event.key.toLowerCase() === columnId.charAt(3).toLowerCase()) {
-          column.style.backgroundColor = 'green';
-      }
+    if (event.key.toLowerCase() === columnId.charAt(3).toLowerCase()) {
+      column.style.backgroundColor = 'green';
+      keyPressed = true;
+      hitJudge(keyPressed)
+    }
   });
 
   document.body.addEventListener('keyup', function (event) {
-      if (event.key.toLowerCase() === columnId.charAt(3).toLowerCase()) {
-          column.style.backgroundColor = originalColor;
-      }
+    if (event.key.toLowerCase() === columnId.charAt(3).toLowerCase()) {
+      column.style.backgroundColor = originalColor;
+      keyPressed = false;
+    }
   });
 }
 
@@ -265,28 +144,33 @@ Object.keys(columns).forEach(columnColorChange);
 
 //start button function
 
-let startButton = document.getElementById('startButton');
-let startTime;
+const startButton = document.getElementById('startButton');
+let startTime = 0;
 
-  // Add a click event listener to the button
-  startButton.addEventListener('click', function() {
-    // Code to be executed when the button is clicked.
-        clearFallingNote();
-        updateElapsedTime();
-        startGame(0);
+// Add a click event listener to the button
+startButton.addEventListener('click', function () {
+  // Code to be executed when the button is clicked.
 
-            // Reset startTime to null when the button is clicked again
-        startTime = 0;
+  //resetting miss and hit counts
+  hitCount = 0;
+  missCount = 0;
+  document.querySelector('#hit_count').innerText = `${hitCount}`;
+  document.querySelector('#miss_count').innerText = `${missCount}`;
+  //start game again
+  startGame(0);
 
-        // Set the start time only if it's the first time or after clearing         
-        if (!startTime) {
-            startTime = new Date().getTime();
-            // Start updating elapsed time
-            setInterval(updateElapsedTime, 1000);
-        }
-        audio.pause();
-        audio.currentTime = 0;
-        audio.play();
-  });
+  // Reset startTime to 0 when the button is clicked again
+  startTime = 0;
 
-  
+  updateElapsedTime();
+
+  // Set the start time only if it's the first time or after clearing         
+  if (!startTime) {
+    startTime = new Date().getTime();
+    // Start updating elapsed time
+    setInterval(updateElapsedTime, 1000);
+  }
+  audio.pause();
+  audio.currentTime = 0;
+  audio.play();
+});
