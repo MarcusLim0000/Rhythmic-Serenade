@@ -1,18 +1,20 @@
-import { noteWarray } from "./arrayOfNotes";
-console.log(noteWarray);
-const fallingSpeed = 5; // Adjust as needed
-const updateInterval = 5; // Adjust as needed
+import { noteWarray,noteOarray,noteEarray,noteIarray,noteRarray,noteParray } from "./arrayOfNotes.js";
 
-//declare arrays of 1s and 0s, 1 indicating to release a note, 0 to abstain. total beats will be 210
-const noteW = [1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1]
-const noteE = [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
-const noteR = [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
-const noteI = [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
-const noteO = [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
-const noteP = [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+const fallingSpeed = 5; // Adjust as needed/ how much the notes move per pixels
+const updateInterval = 3; // Adjust as needed/ how fast the function increments the pixels per note
 
-// bpm in milliseconds: 428.571
-const interval = 428.571;
+//declare arrays of 1s and 0s in a separate file, 1 indicating to release a note, 0 to abstain. total beats will be 210
+//when coding notes at a speed of 5 and updateinterval of 5, minimum of 2 0s between notes per column.
+
+const noteW = noteWarray
+const noteE = noteEarray
+const noteR = noteRarray
+const noteI = noteIarray
+const noteO = noteOarray
+const noteP = noteParray
+
+// bpm in milliseconds: 461.54
+const interval = 461.54;
 
 //declaring state of columns
 
@@ -92,7 +94,7 @@ function createFallingNote(columnId) {
     fallingObject.style.transform = `translateY(${position}px)`;
 
     if (position > column.clientHeight) {
-      clearInterval(noteSpeed);
+      clearInterval(noteSpeed);//after coding notes double check if this is needed.
       fallingObject.remove();
     }
   }
@@ -110,7 +112,7 @@ function hitJudge(keyPressed) {
   // Parse the transform matrix to get the translateY value
   let translateY = parseInt(transform.split(',')[5])
 
-  // Check if the falling object's position is at the desired translateY value, note is true, and keyPressed is true
+  // Check if the falling object's position is at the desired translateY value and keyPressed is true
   if (translateY >= 550 && translateY <= 650 && keyPressed === true) {
     hitCount ++;
     document.querySelector('#hit_count').innerText = `${hitCount}`;
@@ -164,14 +166,14 @@ startButton.addEventListener('click', function () {
   // Reset startTime to 0 when the button is clicked again
   startTime = 0;
 
-  updateElapsedTime();
-
   // Set the start time only if it's the first time or after clearing         
   if (!startTime) {
     startTime = new Date().getTime();
     // Start updating elapsed time
     setInterval(updateElapsedTime, 1000);
   }
+  
+  updateElapsedTime();
   audio.pause();
   audio.currentTime = 0;
   audio.play();
