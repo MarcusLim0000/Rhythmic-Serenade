@@ -63,7 +63,7 @@ function startGame(index) {
     setTimeout(function () {
       startGame(index + 1);
     }, interval);
-  }
+  } //else block? function to display score and roast?
 }
 
 // Function to update elapsed time
@@ -113,7 +113,7 @@ function hitJudge(keyPressed) {
   let translateY = parseInt(transform.split(',')[5])
 
   // Check if the falling object's position is at the desired translateY value and keyPressed is true
-  if (translateY >= 550 && translateY <= 650 && keyPressed === true) {
+  if (translateY >= 540 && translateY <= 660 && keyPressed === true) {
     hitCount ++;
     document.querySelector('#hit_count').innerText = `${hitCount}`;
   } else {
