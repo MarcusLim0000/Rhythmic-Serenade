@@ -30,6 +30,7 @@ const columns = {
 // //other declarations
 let audio = document.getElementById('myAudio');
 
+let timer = 0
 let elapsedTime = 0;
 
 let hitCount = 0;
@@ -113,7 +114,7 @@ function hitJudge(keyPressed) {
   let translateY = parseInt(transform.split(',')[5])
 
   // Check if the falling object's position is at the desired translateY value and keyPressed is true
-  if (translateY >= 540 && translateY <= 660 && keyPressed === true) {
+  if (translateY >= 500 && translateY <= 600 && keyPressed === true) {
     hitCount ++;
     document.querySelector('#hit_count').innerText = `${hitCount}`;
   } else {
@@ -146,6 +147,37 @@ function columnColorChange(columnId) {
 // Attach event listener to each column
 Object.keys(columns).forEach(columnColorChange);
 
+//function to show win/lose message
+
+function displayResult(){
+
+    const resultSection = document.querySelector('.result');
+
+    const winMessage = document.createElement('h2')
+    winMessage.classList.add('win_Message');
+    winMessage.textContent = 'WAAAAA TOO PRO!';
+
+    const loseMessage = document.createElement('h2')
+    loseMessage.classList.add('lose_Message');
+    loseMessage.textContent = 'Skill issue. Git Gud!';
+        
+    if (hitCount >= 49){
+        resultSection.appendChild(winMessage)
+    }else{
+        resultSection.appendChild(loseMessage)
+    }
+}
+
+function scoreCountdown (){
+    const intervalId = setInterval(function(){
+        timer++;
+        if (timer === 90){
+            clearInterval(intervalId);
+            displayResult();
+        }
+    },1000)
+}
+
 //start button function
 
 const startButton = document.getElementById('startButton');
@@ -160,6 +192,14 @@ startButton.addEventListener('click', function () {
   missCount = 0;
   document.querySelector('#hit_count').innerText = `${hitCount}`;
   document.querySelector('#miss_count').innerText = `${missCount}`;
+
+    // Remove the last appended score message element
+    const resultSection = document.querySelector('.result');
+    const lastChild = resultSection.lastChild;
+  
+    if (lastChild) {
+      resultSection.removeChild(lastChild);
+    }
   //start game again
   startGame(0);
 
@@ -174,6 +214,7 @@ startButton.addEventListener('click', function () {
   }
   
   updateElapsedTime();
+  scoreCountdown();
   audio.pause();
   audio.currentTime = 0;
   audio.play();
