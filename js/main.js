@@ -114,7 +114,7 @@ function hitJudge(keyPressed) {
 
   // Check if the falling object's position is at the desired translateY range and keyPressed is true, increase range for easier difficulty.
   //range must be modified if the columns px height change due to size changes in devices display screens/viewport. now modified for 350px columns, 1980x1080 resolution displays.
-  if (translateY >= 300 && translateY <= 350 && keyPressed === true) {
+  if (translateY >= 250 && translateY <= 350 && keyPressed === true) {
     hitCount ++;
     document.querySelector('#hit_count').innerText = `${hitCount}`;
   } else {
