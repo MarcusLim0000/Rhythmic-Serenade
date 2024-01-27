@@ -4,7 +4,6 @@ const fallingSpeed = 5; // Adjust as needed/ how much the notes move per pixels
 const updateInterval = 3; // Adjust as needed/ how fast the function increments the pixels per note
 
 //declare arrays of 1s and 0s in a separate file, 1 indicating to release a note, 0 to abstain. total beats will be 210
-//when coding notes at a speed of 5 and updateinterval of 5, minimum of 2 0s between notes per column.
 
 const noteW = noteWarray
 const noteE = noteEarray
@@ -36,7 +35,7 @@ let elapsedTime = 0;
 let hitCount = 0;
 let missCount = 0;
 
-//function to start game and create notes
+//function to start game
 
 function startGame(index) {
   if (noteW[index] === 1) {
@@ -60,11 +59,11 @@ function startGame(index) {
 
   // Check if there are more items to process
   if (index < noteW.length - 1) {
-    // Set a timeout to process the next item after the delay
+    // Set a timeout to process the next index in the array after the delay
     setTimeout(function () {
       startGame(index + 1);
     }, interval);
-  } //else block? function to display score and roast?
+  }
 }
 
 // Function to update elapsed time
@@ -95,7 +94,7 @@ function createFallingNote(columnId) {
     fallingObject.style.transform = `translateY(${position}px)`;
 
     if (position > column.clientHeight) {
-      clearInterval(noteSpeed);//after coding notes double check if this is needed.
+      clearInterval(noteSpeed);
       fallingObject.remove();
     }
   }
@@ -110,11 +109,12 @@ function hitJudge(keyPressed) {
 
   // Get the computed style of the falling object
   let transform = window.getComputedStyle(note).transform;
-  // Parse the transform matrix to get the translateY value
+  // Parse the transform matrix to get the translateY value, the note position's Y value is at the 5th index of matrix
   let translateY = parseInt(transform.split(',')[5])
 
-  // Check if the falling object's position is at the desired translateY value and keyPressed is true
-  if (translateY >= 500 && translateY <= 600 && keyPressed === true) {
+  // Check if the falling object's position is at the desired translateY range and keyPressed is true, increase range for easier difficulty.
+  //range must be modified if the columns px height change due to size changes in devices display screens/viewport. now modified for 350px columns, 1980x1080 resolution displays.
+  if (translateY >= 300 && translateY <= 350 && keyPressed === true) {
     hitCount ++;
     document.querySelector('#hit_count').innerText = `${hitCount}`;
   } else {
@@ -122,6 +122,7 @@ function hitJudge(keyPressed) {
     document.querySelector('#miss_count').innerText = `${missCount}`;
   }
 }
+
 //event listener to change column color event when key is pressed for these elements
 function columnColorChange(columnId) {
   const column = columns[columnId];
@@ -155,7 +156,7 @@ function displayResult(){
 
     const winMessage = document.createElement('h2')
     winMessage.classList.add('win_Message');
-    winMessage.textContent = 'WAAAAA TOO PRO!';
+    winMessage.textContent = 'WAAAAA TOO PRO! But so tryhard. :D';
 
     const loseMessage = document.createElement('h2')
     loseMessage.classList.add('lose_Message');
@@ -167,6 +168,8 @@ function displayResult(){
         resultSection.appendChild(loseMessage)
     }
 }
+
+//function to count time separately to display win/lose message
 
 function scoreCountdown (){
     const intervalId = setInterval(function(){
@@ -184,8 +187,9 @@ const startButton = document.getElementById('startButton');
 let startTime = 0;
 
 // Add a click event listener to the button
+
 startButton.addEventListener('click', function () {
-  // Code to be executed when the button is clicked.
+  // Code to be executed when the button is clicked, events must be in order.
 
   //resetting miss and hit counts
   hitCount = 0;
@@ -215,6 +219,7 @@ startButton.addEventListener('click', function () {
   
   updateElapsedTime();
   scoreCountdown();
+  //reset song
   audio.pause();
   audio.currentTime = 0;
   audio.play();
