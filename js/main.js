@@ -64,7 +64,6 @@ function startGame(index) {
       startGame(index + 1);
     }, interval);
   }
-  hitJudge()
 }
 
 // Function to update elapsed time
