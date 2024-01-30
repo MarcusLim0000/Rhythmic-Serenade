@@ -191,6 +191,8 @@ let startTime = 0;
 startButton.addEventListener('click', function () {
   // Code to be executed when the button is clicked, events must be in order.
 
+  timer = 0;
+
   //resetting miss and hit counts
   hitCount = 0;
   missCount = 0;
